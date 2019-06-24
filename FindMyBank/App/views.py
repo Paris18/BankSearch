@@ -25,11 +25,6 @@ class BankView(viewsets.ModelViewSet):
     serializer_class = BankSerializer
 
     @action(methods=['get'], detail=False)
-    def hello(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
-
-    @action(methods=['get'], detail=False)
     def findbank(self, request):
         try:
             data = Branches.objects.get(ifsc = request.GET["ifsc"])
