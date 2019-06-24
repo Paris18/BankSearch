@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,12 +42,6 @@ INSTALLED_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
-    # 'rest_framework.authtoken',
-    # 'raven.contrib.django.raven_compat',
-    # 'filters',
-    # 'reversion',
-    # 'rangefilter',
-    # 'django_extensions',
 ]
 
 LOCAL_APPS = [
@@ -54,12 +49,6 @@ LOCAL_APPS = [
 ]
 
 INSTALLED_APPS = INSTALLED_APPS+THIRD_PARTY_APPS+LOCAL_APPS
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
 
 
 MIDDLEWARE = [
@@ -98,11 +87,26 @@ WSGI_APPLICATION = 'FindMyBank.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'indian_banks',
+        'USER': 'paris',
+        'PASSWORD': '*******',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':datetime.timedelta(days=5)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
