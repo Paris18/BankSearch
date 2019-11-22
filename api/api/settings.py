@@ -81,32 +81,45 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+heroku = True
 
-DATABASE_ROUTERS = ['api.database_router.AuthRouter','api.database_router.BankRouter']
-
-
-DATABASES = {
-    'auth_db': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'users',
-        'USER': 'raju',
-        'PASSWORD': 'Raju1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'banks_db': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'indian_banks',
-        'USER': 'raju',
-        'PASSWORD': 'Raju1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    "default" : {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+if heroku:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'indian_banks',
+            'USER': 'paris',
+            'PASSWORD': 'Paris1234',
+            'HOST': 'localhost',
+            'PORT': '5432',
         }
-}
+    }
+else:
+    DATABASE_ROUTERS = ['api.database_router.AuthRouter','api.database_router.BankRouter']
+
+
+    DATABASES = {
+        'auth_db': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'users',
+            'USER': 'raju',
+            'PASSWORD': 'Raju1234',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        },
+        'banks_db': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'indian_banks',
+            'USER': 'raju',
+            'PASSWORD': 'Raju1234',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        },
+        "default" : {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+            }
+    }
 
 
 
